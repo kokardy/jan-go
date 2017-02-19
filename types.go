@@ -15,7 +15,7 @@ type Code interface {
 
 func CalcCheckDigit(code string) string {
 	count := 0
-	for i := 0; i < len(code); i++ {
+	for i := 0; i < len(code)-1; i++ {
 		d, _ := strconv.Atoi(string(code[i]))
 		if i%2 == 1 {
 			d *= 3
@@ -56,7 +56,7 @@ func (g GS1) CheckDigitOK() bool {
 }
 
 func (g GS1) ToJAN() JAN {
-	pre_jan := JAN(string(g[2:13]))
+	pre_jan := JAN(string(g[3:16]))
 	check_digit := pre_jan.CheckDigit()
-	return JAN(string(g[2:12]) + check_digit)
+	return JAN(string(g[3:15]) + check_digit)
 }
